@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import { IMAGES } from "../../lib/images";
+import { SITE } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const services = await getCollection("services");
+  return services.map((service) => ({
+    params: { id: service.id },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+---
+
+<BaseLayout title={service.data.title} description={service.data.shortDescription}>
+  <section class="relative overflow-hidden bg-ink-900">
+    <Image
+      src={IMAGES[service.data.heroImage as keyof typeof IMAGES]}
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover opacity-40"
+      width={1200}
+      height={900}
+    />
+    <div class="relative mx-auto max-w-[1400px] px-6 py-[120px]">
+      <a href="/services" class="text-sm font-medium text-accent-400 hover:text-accent-300">&larr; Semua Layanan</a>
+      <h1 class="mt-4 max-w-2xl text-4xl font-bold leading-tight text-white">{service.data.title}</h1>
+      <p class="mt-5 max-w-xl text-lg text-ink-200">{service.data.shortDescription}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 py-[120px]">
+    <div class="text-lg leading-relaxed text-ink-700 [&_p]:mb-4">
+      <Content />
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold text-ink-900">Keunggulan Layanan</h2>
+      <ul class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {service.data.features.map((feature) => (
+          <li class="flex items-start gap-3 rounded-xl border border-ink-100 p-4 text-sm text-ink-700">
+            <span class="mt-0.5 text-brand-600">&check;</span>
+            {feature}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold text-ink-900">Proses Pengerjaan</h2>
+      <ol class="mt-5 space-y-5">
+        {service.data.process.map((step, index) => (
+          <li class="flex gap-4">
+            <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white">
+              {index + 1}
+            </span>
+            <div>
+              <p class="font-semibold text-ink-900">{step.step}</p>
+              <p class="mt-1 text-sm text-ink-600">{step.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[1400px] px-6 pb-20">
+    <div class="flex flex-col items-center rounded-3xl bg-brand-700 px-8 py-14 text-center">
+      <h2 class="max-w-xl text-2xl font-bold text-white">
+        Tertarik dengan layanan {service.data.title}?
+      </h2>
+      <p class="mt-4 max-w-lg text-brand-100">Hubungi kami untuk konsultasi dan survey lokasi.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a
+          href={SITE.whatsappUrl}
+          class="rounded-full bg-accent-500 px-7 py-3 text-sm font-semibold text-white hover:bg-accent-600"
+        >
+          Chat via WhatsApp
+        </a>
+        <a
+          href="/contact"
+          class="rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white hover:bg-white/10"
+        >
+          Hubungi Kami
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

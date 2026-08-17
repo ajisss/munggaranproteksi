@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getImage } from "astro:assets";
+import Gallery from "../components/Gallery";
+import { PORTFOLIO_ITEMS, CATEGORY_LABELS } from "../lib/images";
+
+const galleryItems = await Promise.all(
+  PORTFOLIO_ITEMS.map(async (item) => {
+    const optimized = await getImage({ src: item.image, width: 800, height: 600 });
+    return {
+      title: item.title,
+      category: item.category,
+      categoryLabel: CATEGORY_LABELS[item.category],
+      src: optimized.src,
+    };
+  }),
+);
+---
+
+<BaseLayout title="Portfolio" description="Portfolio proyek Munggaran Proteksi: epoxy flooring, sandblasting & painting, polished concrete, dan pipe wrapping.">
+  <section class="bg-ink-900 py-[120px] text-white">
+    <div class="mx-auto max-w-[1400px] px-6">
+      <p class="text-sm font-semibold uppercase tracking-widest text-accent-400">Portfolio</p>
+      <h1 class="mt-4 max-w-2xl text-4xl font-bold leading-tight">
+        Proyek yang Telah Kami Kerjakan
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-200">
+        150+ proyek untuk klien industri, komersial, dan pemerintah. Beberapa contoh di bawah
+        menggunakan foto placeholder — hubungi kami untuk melihat dokumentasi proyek lengkap.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[1400px] px-6 py-[120px]">
+    <Gallery client:load items={galleryItems} />
+  </section>
+</BaseLayout>
