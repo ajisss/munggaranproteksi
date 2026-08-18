@@ -56,6 +56,15 @@ export default function Navbar({
     return currentPath.startsWith(link.href);
   }
 
+  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, link: NavLink) {
+    if (!link.sectionId) return;
+    if (currentPath === "/") {
+      e.preventDefault();
+      document.getElementById(link.sectionId)?.scrollIntoView({ behavior: "smooth" });
+    }
+    setOpen(false);
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-ink-100 bg-white/90 backdrop-blur-sm">
       <div className="relative mx-auto flex max-w-[1400px] items-center justify-between px-6 py-3">
@@ -68,6 +77,7 @@ export default function Navbar({
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link)}
               className={`text-sm font-medium transition-colors hover:text-brand-600 ${
                 isActive(link) ? "text-brand-600" : "text-ink-600"
               }`}
@@ -107,6 +117,7 @@ export default function Navbar({
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link)}
               className={`rounded-md px-2 py-2 text-sm font-medium hover:bg-ink-50 hover:text-brand-600 ${
                 isActive(link) ? "text-brand-600" : "text-ink-600"
               }`}

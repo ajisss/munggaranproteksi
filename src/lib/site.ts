@@ -74,12 +74,12 @@ export const SITE = {
 
 export const NAV_LINKS = [
   { label: "Beranda", href: "/", sectionId: "" },
-  { label: "Layanan", href: "/services", sectionId: "layanan-kami" },
+  { label: "Layanan", href: "/#layanan-kami", sectionId: "layanan-kami" },
   { label: "Kenapa Pilih Kami", href: "/#kenapa-kami", sectionId: "kenapa-kami" },
-  { label: "Portfolio", href: "/portfolio", sectionId: "portfolio-preview" },
+  { label: "Portfolio", href: "/#portfolio-preview", sectionId: "portfolio-preview" },
   { label: "Testimoni", href: "/#testimoni", sectionId: "testimoni" },
   { label: "FAQ", href: "/#faq", sectionId: "faq" },
-  { label: "Tentang Kami", href: "/about", sectionId: "tentang-kami" },
+  { label: "Tentang Kami", href: "/#tentang-kami", sectionId: "tentang-kami" },
 ];
 
 export const FAQS = [
