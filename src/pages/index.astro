@@ -3,26 +3,45 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import FaqAccordion from "../components/FaqAccordion";
+import ContactForm from "../components/ContactForm";
 import { SITE, FAQS } from "../lib/site";
 import { IMAGES, PORTFOLIO_ITEMS } from "../lib/images";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
 const featuredPortfolio = PORTFOLIO_ITEMS.slice(0, 3);
 
+const clients = [
+  { name: "Argha Karya Prima Industry", logo: "/clients/pln.png" },
+  { name: "Inti Persada Teknik", logo: "/clients/ikpt.png" },
+  { name: "Tri Mulia Gemilang", logo: "/clients/waskita.png" },
+  { name: "Brantas Abipraya", logo: "/clients/abipara.png" },
+  { name: "SM Cyclo Indonesia", logo: "/clients/tiki.png" },
+  { name: "Antam", logo: "/clients/antam.jpg" },
+  { name: "Citra Persana Infrastruktur", logo: "/clients/se.png" },
+  { name: "Asahi Diamond Industrial Indonesia", logo: "/clients/kasa.png" },
+  { name: "Great Giant Pineapple", logo: "/clients/dole.jpeg" },
+  { name: "Samudera Rekso Asri", logo: "/clients/sumitomo.png" },
+  { name: "Krakatau Chandra Energi", logo: "/clients/wce.jpeg" },
+];
+
 const whyChooseUs = [
   {
+    icon: "🎯",
     title: "Presisi di Setiap Detail",
     detail: "Dari persiapan permukaan hingga finishing, setiap tahap dikerjakan dengan standar yang konsisten.",
   },
   {
+    icon: "👷",
     title: "Tim Berpengalaman",
     detail: "Ditangani oleh tim yang telah menyelesaikan 150+ proyek untuk klien industri dan pemerintah.",
   },
   {
+    icon: "🏅",
     title: "Standar Internasional",
     detail: "Layanan pipe wrapping mengikuti standar ISO 21809-1 untuk keandalan perlindungan korosi jangka panjang.",
   },
   {
+    icon: "💬",
     title: "Komunikasi Transparan",
     detail: "Update progres dan estimasi biaya disampaikan jelas sejak survey awal hingga serah terima.",
   },
@@ -30,221 +49,313 @@ const whyChooseUs = [
 ---
 
 <BaseLayout title="Beranda">
-  <section class="overflow-hidden bg-white">
-    <div class="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-12 px-6 py-[120px] lg:grid-cols-2">
-      <div>
-        <span class="inline-flex items-center gap-2 rounded-full border border-ink-100 bg-ink-50 px-4 py-1.5 text-sm font-medium text-ink-700">
-          <span class="flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-white">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-          Dipercaya 25+ Klien Industri &amp; Pemerintah
-        </span>
 
-        <h1 class="mt-6 text-4xl font-bold leading-tight text-ink-900 md:text-5xl">
-          Permukaan yang Tahan Lama, Bukan Cuma Terlihat Bagus.
-        </h1>
+  {/* ── HERO ── */}
+  <section class="relative min-h-[90vh] overflow-hidden bg-[#0d1b4b]">
+    {/* Image – visible on right, clipped left by gradient */}
+    <Image
+      src={IMAGES.hero}
+      alt="Proyek Munggaran Proteksi"
+      class="absolute inset-0 h-full w-full object-cover object-center"
+      width={1600}
+      height={900}
+    />
+    {/* Gradient: solid navy left → transparent ~55% → transparent right */}
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0d1b4b] from-40% via-[#0d1b4b]/80 via-55% to-transparent to-75%"></div>
 
-        <p class="mt-6 max-w-lg text-lg text-ink-600">
-          Dari epoxy flooring hingga pipe wrapping, kami bantu proyek industri dan infrastruktur
-          Anda selesai dengan hasil yang presisi, rapi, dan tahan lama.
-        </p>
+    <div class="relative mx-auto flex max-w-[1400px] flex-col justify-center px-8 pt-28 pb-32 md:pt-36 md:pb-48 lg:min-h-[90vh] lg:max-w-[55%] xl:max-w-[1400px]">
+      {/* Badge */}
+      <span class="inline-flex w-fit items-center gap-2 rounded-full bg-[#1a3a7c] px-4 py-2 text-sm font-medium text-white/90">
+        <svg class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+        </svg>
+        Dipercaya 25+ Klien Industri &amp; Pemerintah
+      </span>
 
-        <div class="mt-8 flex flex-wrap gap-4">
-          <a
-            href={SITE.whatsappUrl}
-            class="rounded-full bg-brand-600 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
-          >
-            Konsultasi Sekarang
-          </a>
-          <a
-            href="/services"
-            class="rounded-full border border-ink-200 px-7 py-3 text-sm font-semibold text-ink-800 transition-colors hover:bg-ink-50"
-          >
-            Lihat Layanan
-          </a>
-        </div>
+      <h1 class="mt-6 max-w-xl text-4xl font-bold leading-tight text-white md:text-5xl lg:text-[3.5rem]">
+        Permukaan yang Tahan Lama, Bukan Cuma Terlihat Bagus.
+      </h1>
 
-        <p class="mt-10 text-sm text-ink-500">
-          Tanpa biaya tersembunyi &nbsp;&middot;&nbsp; Respon cepat &nbsp;&middot;&nbsp; Bersertifikasi ISO 21809-1
-        </p>
-      </div>
+      <p class="mt-6 max-w-lg text-base leading-relaxed text-white/70 md:text-lg">
+        Dari epoxy flooring hingga pipe wrapping, kami bantu proyek industri dan infrastruktur
+        Anda selesai dengan hasil yang presisi, rapi dan tahan lama.
+      </p>
 
-      <div class="relative">
-        <Image
-          src={IMAGES.hero}
-          alt="Proyek Munggaran Proteksi"
-          class="w-full rounded-3xl object-cover shadow-xl"
-          width={900}
-          height={700}
-        />
-
-        <div class="absolute -bottom-6 left-4 right-4 flex flex-col gap-3 sm:left-8 sm:right-auto sm:w-72">
-          <div class="flex items-center gap-3 rounded-2xl border border-ink-100 bg-white p-4 shadow-lg">
-            <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-100 text-brand-700">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s7-4.5 7-11V5l-7-3-7 3v6c0 6.5 7 11 7 11z" stroke-linejoin="round" />
-                <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-            <div>
-              <p class="text-sm font-semibold text-ink-900">Survey Lokasi</p>
-              <p class="text-xs text-ink-500">Dijadwalkan dalam 24 jam</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-3 rounded-2xl border border-ink-100 bg-white p-4 shadow-lg">
-            <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-accent-400/20 text-accent-600">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" />
-                <rect x="3" y="4" width="18" height="16" rx="2" />
-              </svg>
-            </span>
-            <div>
-              <p class="text-sm font-semibold text-ink-900">Penawaran Terkirim</p>
-              <p class="text-xs text-ink-500">Tanpa proses berbelit</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="border-b border-ink-100 bg-white">
-    <div class="mx-auto grid max-w-[1400px] grid-cols-1 gap-8 px-6 py-[120px] sm:grid-cols-3">
-      {SITE.stats.map((stat) => (
-        <div class="text-center">
-          <p class="text-4xl font-bold text-brand-600">{stat.value}</p>
-          <p class="mt-2 text-sm font-medium text-ink-600">{stat.label}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section id="layanan-kami" class="scroll-mt-24 mx-auto max-w-[1400px] px-6 py-[120px]">
-    <div class="max-w-2xl">
-      <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Layanan Kami</p>
-      <h2 class="mt-3 text-3xl font-bold text-ink-900">
-        Layanan Surface Finishing untuk Industri &amp; Konstruksi
-      </h2>
-    </div>
-
-    <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {services.map((service) => (
+      <div class="mt-8 flex flex-wrap gap-4">
         <a
-          href={`/services/${service.id}`}
-          class="group flex flex-col overflow-hidden rounded-2xl border border-ink-100 transition-shadow hover:shadow-lg"
+          href={SITE.whatsappUrl}
+          class="rounded-full bg-[#e8472a] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#cf3d22]"
         >
-          <Image
-            src={IMAGES[service.data.cardImage as keyof typeof IMAGES]}
-            alt={service.data.title}
-            class="h-40 w-full object-cover"
-            width={600}
-            height={450}
-          />
-          <div class="flex flex-1 flex-col p-5">
-            <h3 class="font-semibold text-ink-900 group-hover:text-brand-600">
-              {service.data.title}
-            </h3>
-            <p class="mt-2 flex-1 text-sm text-ink-600">{service.data.shortDescription}</p>
-            <span class="mt-4 text-sm font-semibold text-brand-600">Selengkapnya &rarr;</span>
-          </div>
+          Konsultasi Sekarang
         </a>
-      ))}
+        <a
+          href="#layanan-kami"
+          onclick="event.preventDefault();document.getElementById('layanan-kami').scrollIntoView({behavior:'smooth'})"
+          class="rounded-full border border-white/30 bg-transparent px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+        >
+          Lihat Layanan
+        </a>
+      </div>
+
+      <p class="mt-8 text-sm text-white/40">
+        Tanpa biaya tersembunyi &nbsp;·&nbsp; Respon cepat &nbsp;·&nbsp; Bersertifikasi ISO 21809-1
+      </p>
     </div>
   </section>
 
-  <section id="kenapa-kami" class="scroll-mt-24 bg-ink-50 py-[120px]">
+  {/* ── KLIEN KAMI ── */}
+  <section class="border-b border-ink-100 bg-white py-28">
+    <p class="mb-10 text-center text-sm font-semibold tracking-wide text-ink-400">Klien Kami</p>
+    <div class="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+      <div class="animate-marquee flex w-max items-center gap-16">
+        {[...clients, ...clients].map((client, i) => (
+          <img
+            src={client.logo}
+            alt={client.name}
+            class="h-16 w-auto object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── LAYANAN ── */}
+  <section id="layanan-kami" class="scroll-mt-20 bg-white py-20">
     <div class="mx-auto max-w-[1400px] px-6">
-      <div class="max-w-2xl">
-        <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Kenapa Pilih Kami</p>
-        <h2 class="mt-3 text-3xl font-bold text-ink-900">Alasan Klien Mempercayakan Proyeknya ke Kami</h2>
+      <div class="mb-12 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 class="text-3xl font-bold text-ink-900">
+            Layanan Surface Finishing untuk<br class="hidden md:block" /> Industri &amp; Konstruksi
+          </h2>
+        </div>
+        <a href="/services" class="text-sm font-medium text-ink-400 hover:text-ink-900">
+          Lihat semua layanan →
+        </a>
       </div>
 
-      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {services.map((service) => (
+          <a
+            href={`/services/${service.id}`}
+            class="group flex flex-col overflow-hidden rounded-2xl bg-ink-50 transition-all hover:bg-ink-100 hover:shadow-lg"
+          >
+            <Image
+              src={IMAGES[service.data.cardImage as keyof typeof IMAGES]}
+              alt={service.data.title}
+              class="h-44 w-full object-cover"
+              width={600}
+              height={450}
+            />
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class="font-semibold text-ink-900">{service.data.title}</h3>
+              <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-500">{service.data.shortDescription}</p>
+              <span class="mt-4 text-sm font-semibold text-brand-600 group-hover:text-brand-700">
+                Selengkapnya →
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── KENAPA KAMI ── */}
+  <section id="kenapa-kami" class="scroll-mt-20 bg-navy-800 py-20">
+    <div class="mx-auto max-w-[1400px] px-6">
+      <p class="text-sm font-semibold uppercase tracking-wide text-brand-400">Alasan Pilih Kami</p>
+      <h2 class="mt-3 text-3xl font-bold text-white">Alasan Klien Mempercayakan Proyeknya ke Kami</h2>
+
+      <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {whyChooseUs.map((item) => (
-          <div class="rounded-2xl border border-ink-100 bg-white p-6">
-            <h3 class="font-semibold text-ink-900">{item.title}</h3>
-            <p class="mt-2 text-sm text-ink-600">{item.detail}</p>
+          <div class="rounded-2xl border border-white/10 bg-navy-700 p-6">
+            <span class="text-3xl">{item.icon}</span>
+            <h3 class="mt-4 font-semibold text-white">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/60">{item.detail}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section id="portfolio-preview" class="scroll-mt-24 py-[120px]">
+  {/* ── PORTFOLIO ── */}
+  <section id="portfolio-preview" class="scroll-mt-20 py-20">
     <div class="mx-auto max-w-[1400px] px-6">
-      <div class="flex flex-wrap items-end justify-between gap-4">
-        <div class="max-w-2xl">
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div>
           <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Portfolio</p>
           <h2 class="mt-3 text-3xl font-bold text-ink-900">Sebagian Proyek yang Telah Kami Kerjakan</h2>
         </div>
-        <a href="/portfolio" class="text-sm font-semibold text-brand-600 hover:text-brand-700">
-          Lihat semua portfolio &rarr;
+        <a href="/portfolio" class="rounded-full border border-brand-600 px-5 py-2 text-sm font-semibold text-brand-600 hover:bg-brand-50">
+          Lihat semua portfolio →
         </a>
       </div>
 
-      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-        {featuredPortfolio.map((item) => (
-          <div class="overflow-hidden rounded-2xl border border-ink-100 bg-white">
-            <Image src={item.image} alt={item.title} class="h-48 w-full object-cover" width={600} height={450} />
-            <p class="p-4 text-sm font-medium text-ink-800">{item.title}</p>
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        {/* kiri: 2 grid kecil */}
+        <div class="grid grid-cols-2 gap-5">
+          {featuredPortfolio.slice(0, 2).map((item) => (
+            <div class="overflow-hidden rounded-2xl bg-ink-100">
+              <img src={item.image} alt={item.title} class="h-44 w-full object-cover" loading="lazy" />
+              <p class="p-3 text-sm font-medium text-ink-800">{item.title}</p>
+            </div>
+          ))}
+          {/* teks di bawah 2 thumbnail */}
+          <div class="col-span-2 flex flex-col justify-center rounded-2xl border border-ink-100 p-5">
+            <p class="text-sm text-ink-500">Kami telah menyelesaikan berbagai proyek permukaan industri dari Jawa hingga luar pulau.</p>
+            <a href="/portfolio" class="mt-3 text-sm font-semibold text-brand-600 hover:text-brand-700">
+              Lihat semua foto proyek →
+            </a>
+          </div>
+        </div>
+
+        {/* kanan: 1 foto besar featured */}
+        {featuredPortfolio[2] && (
+          <div class="overflow-hidden rounded-2xl bg-ink-100">
+            <Image
+              src={featuredPortfolio[2].image}
+              alt={featuredPortfolio[2].title}
+              class="h-full min-h-[320px] w-full object-cover"
+              width={800}
+              height={600}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {/* ── TESTIMONI ── */}
+  <section id="testimoni" class="scroll-mt-20 bg-ink-50 py-20">
+    <div class="mx-auto max-w-[1400px] px-6">
+      <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Testimoni</p>
+      <h2 class="mt-3 text-3xl font-bold text-ink-900">Apa Kata Klien Kami</h2>
+
+      <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {SITE.testimonials.map((item) => (
+          <div class="flex flex-col rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+            <p class="flex-1 text-sm leading-relaxed text-ink-700">&ldquo;{item.quote}&rdquo;</p>
+            <div class="mt-5 border-t border-ink-100 pt-4">
+              <p class="text-sm font-semibold text-ink-900">{item.name}</p>
+              <p class="text-xs text-ink-400">{item.company}</p>
+            </div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section id="testimoni" class="scroll-mt-24 mx-auto max-w-[1400px] px-6 py-[120px]">
-    <div class="max-w-2xl">
-      <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Testimoni</p>
-      <h2 class="mt-3 text-3xl font-bold text-ink-900">Apa Kata Klien Kami</h2>
-    </div>
+  {/* ── TENTANG + STATS ── */}
+  <section id="tentang-kami" class="scroll-mt-20 bg-white py-20">
+    <div class="mx-auto max-w-[1400px] px-6">
+      <div class="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+        <Image
+          src={IMAGES.about}
+          alt="Tim Munggaran Proteksi"
+          class="w-full rounded-2xl object-cover shadow-lg"
+          width={700}
+          height={500}
+        />
+        <div>
+          <h2 class="text-3xl font-bold leading-snug text-ink-900 md:text-4xl">
+            Kami adalah perusahaan kontraktor profesional yang bergerak dibidang solusi perawatan permukaan industri.
+          </h2>
+          <p class="mt-5 text-ink-600">
+            Melayani berbagai sektor permukaan industri dengan kualitas dan layanan profesional.
+          </p>
 
-    <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
-      {SITE.testimonials.map((item) => (
-        <div class="rounded-2xl border border-ink-100 bg-white p-6">
-          <p class="text-ink-700">&ldquo;{item.quote}&rdquo;</p>
-          <p class="mt-4 text-sm font-semibold text-ink-900">{item.name}</p>
-          <p class="text-sm text-ink-500">{item.company}</p>
+          <div class="mt-10 grid grid-cols-3 gap-6 border-t border-ink-100 pt-8">
+            {SITE.stats.map((stat) => (
+              <div>
+                <p class="text-3xl font-bold text-brand-600">{stat.value}</p>
+                <p class="mt-1 text-sm text-ink-500">{stat.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </section>
-
-  <section id="faq" class="scroll-mt-24 bg-ink-50 py-[120px]">
-    <div class="mx-auto max-w-3xl px-6">
-      <div class="max-w-2xl">
-        <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">FAQ</p>
-        <h2 class="mt-3 text-3xl font-bold text-ink-900">Pertanyaan yang Sering Ditanyakan</h2>
-      </div>
-
-      <div class="mt-10">
-        <FaqAccordion client:visible items={FAQS} />
       </div>
     </div>
   </section>
 
-  <section id="tentang-kami" class="scroll-mt-24 mx-auto max-w-[1400px] px-6 py-[120px]">
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
-      <Image src={IMAGES.about} alt="Tim dan workshop Munggaran Proteksi" class="rounded-2xl" width={600} height={450} />
-      <div>
-        <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Tentang Kami</p>
-        <h2 class="mt-3 text-3xl font-bold text-ink-900">{SITE.philosophy}</h2>
-        <p class="mt-5 text-ink-600">{SITE.description}</p>
-        <p class="mt-4 text-ink-600">
-          Ditangani tim berpengalaman yang memegang standar kualitas yang sama di setiap proyek —
-          dari survey awal, persiapan permukaan, hingga serah terima.
-        </p>
-        <a href="/about" class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700">
-          Selengkapnya tentang kami &rarr;
-        </a>
+  {/* ── FAQ ── */}
+  <section id="faq" class="scroll-mt-20 py-20">
+    <div class="mx-auto max-w-[1400px] px-6">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start">
+        <div class="lg:sticky lg:top-28">
+          <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">FAQ</p>
+          <h2 class="mt-3 text-3xl font-bold text-ink-900">Pertanyaan yang Sering Ditanyakan</h2>
+          <p class="mt-4 text-ink-500">
+            Belum menemukan jawaban yang kamu cari?{" "}
+            <a href={SITE.whatsappUrl} class="font-semibold text-brand-600 hover:underline">
+              Hubungi kami langsung.
+            </a>
+          </p>
+        </div>
+        <div>
+          <FaqAccordion client:visible items={FAQS} />
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-[1400px] px-6 py-[120px]">
-    <div class="flex flex-col items-center rounded-3xl bg-brand-700 px-8 py-14 text-center">
+  {/* ── KONTAK INLINE ── */}
+  <section id="kontak" class="scroll-mt-20 bg-white py-20">
+    <div class="mx-auto max-w-[1400px] px-6">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+        {/* Form */}
+        <div class="rounded-2xl bg-ink-50 p-8">
+          <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Kontak</p>
+          <h2 class="mt-3 text-2xl font-bold text-ink-900">Kirim Pesan ke Kami</h2>
+          <p class="mt-2 text-sm text-ink-500">Isi form di bawah, tim kami akan merespons dalam 24 jam.</p>
+          <div class="mt-6">
+            <ContactForm client:visible accessKey="" />
+          </div>
+          <div class="mt-6 border-t border-ink-200 pt-6">
+            <a
+              href={SITE.whatsappUrl}
+              class="flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-white py-3 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-100"
+            >
+              Chat Langsung via WhatsApp
+            </a>
+          </div>
+        </div>
+
+        {/* Info + Map */}
+        <div class="flex flex-col gap-6">
+          <div>
+            <p class="text-sm font-semibold tracking-wide text-ink-400">Email</p>
+            <a href={`mailto:${SITE.email}`} class="mt-1 text-ink-900 hover:text-brand-600">{SITE.email}</a>
+          </div>
+          <div>
+            <p class="text-sm font-semibold tracking-wide text-ink-400">Kantor</p>
+            <p class="mt-1 text-sm leading-relaxed text-ink-600">{SITE.officeAddress}</p>
+          </div>
+          <div>
+            <p class="text-sm font-semibold tracking-wide text-ink-400">Workshop</p>
+            <p class="mt-1 text-sm leading-relaxed text-ink-600">{SITE.workshopAddress}</p>
+          </div>
+
+          {/* Google Maps embed — kantor */}
+          <div class="overflow-hidden rounded-2xl border border-ink-200">
+            <iframe
+              title="Lokasi Kantor Munggaran Proteksi"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.5!2d106.98!3d-6.28!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTYnNDguMCJTIDEwNsKwNTgnNDguMCJF!5e0!3m2!1sen!2sid!4v1234567890"
+              width="100%"
+              height="360"
+              style="border:0;display:block"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              class="grayscale"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── CTA FOOTER ── */}
+  <section class="mx-4 mb-0 rounded-t-3xl bg-brand-700 px-6 py-20 sm:mx-8">
+    <div class="mx-auto flex max-w-[1400px] flex-col items-center text-center">
       <h2 class="max-w-xl text-2xl font-bold text-white md:text-3xl">
         Punya proyek yang butuh penanganan surface finishing profesional?
       </h2>
@@ -259,12 +370,14 @@ const whyChooseUs = [
           Chat via WhatsApp
         </a>
         <a
-          href="/contact"
+          href="#kontak"
+          onclick="event.preventDefault();document.getElementById('kontak').scrollIntoView({behavior:'smooth'})"
           class="rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white hover:bg-white/10"
         >
-          Hubungi Kami
+          Kirim Pesan
         </a>
       </div>
     </div>
   </section>
+
 </BaseLayout>

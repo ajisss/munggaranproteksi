@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { X } from "lucide-react";
 
 type GalleryItem = {
   title: string;
@@ -75,9 +76,7 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
             className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
             onClick={() => setLightboxIndex(null)}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 6l12 12M6 18L18 6" strokeLinecap="round" />
-            </svg>
+            <X className="h-5 w-5" />
           </button>
           <figure className="max-w-3xl" onClick={(e) => e.stopPropagation()}>
             <img src={active.src} alt={active.title} className="max-h-[75vh] w-full rounded-xl object-contain" />

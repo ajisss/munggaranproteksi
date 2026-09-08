@@ -1,6 +1,8 @@
 export const SITE = {
   name: "Munggaran Proteksi",
   tagline: "Solusi Permukaan Industri & Infrastruktur yang Tahan Lama dan Terpercaya",
+  footerDescription:
+    "Kami siap menjawab setiap kendala proteksi permukaan proyek Anda dengan hasil presisi dan tahan lama.",
   philosophy: "Kami Tidak Sekedar Mengerjakan, Kami Menyempurnakan",
   description:
     "Munggaran Proteksi menyediakan jasa epoxy flooring, sandblasting & painting, polished concrete, dan pipe wrapping (3 LPE) untuk kebutuhan industri, konstruksi, dan infrastruktur di Indonesia.",

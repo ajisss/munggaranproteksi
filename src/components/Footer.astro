@@ -1,39 +1,62 @@
 ---
+import { Phone, Mail, MapPin, Warehouse } from "@lucide/astro";
 import { SITE, NAV_LINKS } from "../lib/site";
+import logo from "../assets/logo/logo-mpi.avif";
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-ink-100 bg-ink-900 text-ink-200">
-  <div class="mx-auto grid max-w-[1400px] gap-10 px-6 py-14 md:grid-cols-4">
-    <div class="md:col-span-2">
-      <p class="text-lg font-semibold text-white">{SITE.name}</p>
-      <p class="mt-3 max-w-sm text-sm text-ink-400">{SITE.tagline}</p>
-      <div class="mt-5 flex flex-col gap-1 text-sm">
-        <a href={SITE.whatsappUrl} class="hover:text-white">{SITE.phoneDisplay}</a>
-        <a href={`mailto:${SITE.email}`} class="hover:text-white">{SITE.email}</a>
+<footer class="mx-4 bg-brand-700 text-brand-100 sm:mx-8">
+  <div class="mx-auto flex max-w-[1400px] flex-col gap-10 px-6 py-14 md:flex-row md:items-start md:justify-between">
+    <div class="md:max-w-xs">
+      <div class="flex items-center gap-2.5">
+        <img src={logo.src} alt="Munggaran Proteksi" class="h-8 w-auto" />
+        <p class="text-lg font-semibold text-white">{SITE.name}</p>
       </div>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-brand-200">{SITE.footerDescription}</p>
     </div>
 
-    <div>
-      <p class="text-sm font-semibold uppercase tracking-wide text-ink-400">Navigasi</p>
-      <ul class="mt-4 space-y-2 text-sm">
-        {NAV_LINKS.map((link) => (
-          <li><a href={link.href} class="hover:text-white">{link.label}</a></li>
-        ))}
-      </ul>
-    </div>
+    <div class="grid flex-1 grid-cols-1 gap-10 sm:grid-cols-[repeat(3,auto)] sm:justify-center sm:gap-10">
+      <div class="min-w-0">
+        <p class="text-sm font-semibold uppercase tracking-wide text-brand-200">Navigasi</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          {NAV_LINKS.map((link) => (
+            <li><a href={link.href} class="hover:text-white">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
 
-    <div>
-      <p class="text-sm font-semibold uppercase tracking-wide text-ink-400">Lokasi</p>
-      <div class="mt-4 space-y-3 text-sm text-ink-400">
-        <p><span class="text-ink-200">Kantor:</span> {SITE.officeAddress}</p>
-        <p><span class="text-ink-200">Workshop:</span> {SITE.workshopAddress}</p>
+      <div class="min-w-0">
+        <p class="text-sm font-semibold uppercase tracking-wide text-brand-200">Sosmed</p>
+        <div class="mt-4 space-y-3 text-sm">
+          <a href={SITE.whatsappUrl} class="flex items-center gap-3.5 hover:text-white">
+            <Phone class="h-4 w-4 flex-none text-brand-200" />
+            {SITE.phoneDisplay}
+          </a>
+          <a href={`mailto:${SITE.email}`} class="flex items-center gap-3.5 hover:text-white">
+            <Mail class="h-4 w-4 flex-none text-brand-200" />
+            {SITE.email}
+          </a>
+        </div>
+      </div>
+
+      <div class="min-w-0">
+        <p class="text-sm font-semibold uppercase tracking-wide text-brand-200">Lokasi</p>
+        <div class="mt-4 space-y-4 text-sm text-brand-200">
+          <div class="flex items-start gap-3.5">
+            <MapPin class="mt-0.5 h-4 w-4 flex-none text-brand-200" />
+            <p class="max-w-[15rem]"><span class="text-white">Kantor:</span> {SITE.officeAddress}</p>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <Warehouse class="mt-0.5 h-4 w-4 flex-none text-brand-200" />
+            <p class="max-w-[15rem]"><span class="text-white">Workshop:</span> {SITE.workshopAddress}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="border-t border-white/10 px-6 py-5 text-center text-xs text-ink-400">
+  <div class="border-t border-white/10 px-6 py-5 text-center text-xs text-brand-200">
     &copy; {year} {SITE.name}. Semua hak cipta dilindungi.
   </div>
 </footer>

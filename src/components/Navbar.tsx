@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 
 type NavLink = { label: string; href: string; sectionId?: string };
 
@@ -13,6 +14,13 @@ export default function Navbar({
 }) {
   const [open, setOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (currentPath !== "/") return;
@@ -66,7 +74,13 @@ export default function Navbar({
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-100 bg-white/90 backdrop-blur-sm">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-navy-900/95 shadow-lg backdrop-blur-md"
+          : "bg-transparent"
+      }`}
+    >
       <div className="relative mx-auto flex max-w-[1400px] items-center justify-between px-6 py-3">
         <a href="/" className="flex items-center gap-2">
           <img src={logoSrc} alt="Munggaran Proteksi" className="h-10 w-auto" />
@@ -78,8 +92,8 @@ export default function Navbar({
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link)}
-              className={`text-sm font-medium transition-colors hover:text-brand-600 ${
-                isActive(link) ? "text-brand-600" : "text-ink-600"
+              className={`text-sm font-medium transition-colors hover:text-white ${
+                isActive(link) ? "text-white" : "text-white/70"
               }`}
             >
               {link.label}
@@ -88,8 +102,8 @@ export default function Navbar({
         </nav>
 
         <a
-          href="/contact"
-          className="hidden rounded-full bg-brand-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-700 md:inline-block"
+          href="/#kontak"
+          className="hidden rounded-full bg-brand-500 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600 md:inline-block"
         >
           Kirim Penawaran
         </a>
@@ -99,35 +113,29 @@ export default function Navbar({
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-md text-ink-800 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-md text-white md:hidden"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            {open ? (
-              <path d="M6 6l12 12M6 18L18 6" strokeLinecap="round" />
-            ) : (
-              <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-            )}
-          </svg>
+          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-ink-100 bg-white px-6 py-4 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-white/10 bg-navy-900 px-6 py-4 md:hidden">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link)}
-              className={`rounded-md px-2 py-2 text-sm font-medium hover:bg-ink-50 hover:text-brand-600 ${
-                isActive(link) ? "text-brand-600" : "text-ink-600"
+              className={`rounded-md px-2 py-2 text-sm font-medium hover:bg-white/10 hover:text-white ${
+                isActive(link) ? "text-white" : "text-white/70"
               }`}
             >
               {link.label}
             </a>
           ))}
           <a
-            href="/contact"
-            className="mt-2 rounded-full bg-brand-600 px-5 py-2 text-center text-sm font-semibold text-white"
+            href="/#kontak"
+            className="mt-2 rounded-full bg-brand-500 px-5 py-2 text-center text-sm font-semibold text-white"
           >
             Kirim Penawaran
           </a>
