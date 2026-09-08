@@ -4,11 +4,13 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import FaqAccordion from "../components/FaqAccordion";
 import ContactForm from "../components/ContactForm";
+import TestimonialCarousel from "../components/TestimonialCarousel";
 import { SITE, FAQS } from "../lib/site";
 import { IMAGES, PORTFOLIO_ITEMS } from "../lib/images";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
-const featuredPortfolio = PORTFOLIO_ITEMS.slice(0, 3);
+// sandblasting [3], pipe wrapping Pertamina [7] di kiri; floor coating Syngenta [0] di kanan
+const featuredPortfolio = [PORTFOLIO_ITEMS[3], PORTFOLIO_ITEMS[7], PORTFOLIO_ITEMS[0]];
 
 const clients = [
   { name: "Argha Karya Prima Industry", logo: "/clients/pln.png" },
@@ -24,24 +26,29 @@ const clients = [
   { name: "Krakatau Chandra Energi", logo: "/clients/wce.jpeg" },
 ];
 
+const TARGET_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`;
+const HARDHAT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M4 15v-3a6 6 0 0 1 6-6h0"/><path d="M14 6h0a6 6 0 0 1 6 6v3"/></svg>`;
+const AWARD_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>`;
+const CHAT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+
 const whyChooseUs = [
   {
-    icon: "🎯",
+    icon: TARGET_ICON,
     title: "Presisi di Setiap Detail",
     detail: "Dari persiapan permukaan hingga finishing, setiap tahap dikerjakan dengan standar yang konsisten.",
   },
   {
-    icon: "👷",
+    icon: HARDHAT_ICON,
     title: "Tim Berpengalaman",
     detail: "Ditangani oleh tim yang telah menyelesaikan 150+ proyek untuk klien industri dan pemerintah.",
   },
   {
-    icon: "🏅",
+    icon: AWARD_ICON,
     title: "Standar Internasional",
     detail: "Layanan pipe wrapping mengikuti standar ISO 21809-1 untuk keandalan perlindungan korosi jangka panjang.",
   },
   {
-    icon: "💬",
+    icon: CHAT_ICON,
     title: "Komunikasi Transparan",
     detail: "Update progres dan estimasi biaya disampaikan jelas sejak survey awal hingga serah terima.",
   },
@@ -160,15 +167,16 @@ const whyChooseUs = [
   </section>
 
   {/* ── KENAPA KAMI ── */}
-  <section id="kenapa-kami" class="scroll-mt-20 bg-navy-800 py-20">
+  <section id="kenapa-kami" class="scroll-mt-20 bg-navy-800 py-32">
     <div class="mx-auto max-w-[1400px] px-6">
-      <p class="text-sm font-semibold uppercase tracking-wide text-brand-400">Alasan Pilih Kami</p>
       <h2 class="mt-3 text-3xl font-bold text-white">Alasan Klien Mempercayakan Proyeknya ke Kami</h2>
 
       <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {whyChooseUs.map((item) => (
           <div class="rounded-2xl border border-white/10 bg-navy-700 p-6">
-            <span class="text-3xl">{item.icon}</span>
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600/20 text-brand-400">
+              <Fragment set:html={item.icon} />
+            </div>
             <h3 class="mt-4 font-semibold text-white">{item.title}</h3>
             <p class="mt-2 text-sm leading-relaxed text-white/60">{item.detail}</p>
           </div>
@@ -180,67 +188,62 @@ const whyChooseUs = [
   {/* ── PORTFOLIO ── */}
   <section id="portfolio-preview" class="scroll-mt-20 py-20">
     <div class="mx-auto max-w-[1400px] px-6">
-      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Portfolio</p>
-          <h2 class="mt-3 text-3xl font-bold text-ink-900">Sebagian Proyek yang Telah Kami Kerjakan</h2>
-        </div>
-        <a href="/portfolio" class="rounded-full border border-brand-600 px-5 py-2 text-sm font-semibold text-brand-600 hover:bg-brand-50">
-          Lihat semua portfolio →
-        </a>
-      </div>
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
-      <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        {/* kiri: 2 grid kecil */}
-        <div class="grid grid-cols-2 gap-5">
-          {featuredPortfolio.slice(0, 2).map((item) => (
-            <div class="overflow-hidden rounded-2xl bg-ink-100">
-              <img src={item.image} alt={item.title} class="h-44 w-full object-cover" loading="lazy" />
-              <p class="p-3 text-sm font-medium text-ink-800">{item.title}</p>
-            </div>
-          ))}
-          {/* teks di bawah 2 thumbnail */}
-          <div class="col-span-2 flex flex-col justify-center rounded-2xl border border-ink-100 p-5">
-            <p class="text-sm text-ink-500">Kami telah menyelesaikan berbagai proyek permukaan industri dari Jawa hingga luar pulau.</p>
-            <a href="/portfolio" class="mt-3 text-sm font-semibold text-brand-600 hover:text-brand-700">
-              Lihat semua foto proyek →
+        {/* kiri: heading + CTA + 2 foto kecil */}
+        <div class="flex flex-col">
+          <p class="text-sm font-bold tracking-wide text-ink-900">Portofolio</p>
+          <h2 class="mt-3 text-4xl font-bold leading-tight text-ink-900">
+            Sebagian Proyek yang Telah Kami Kerjakan
+          </h2>
+          <div class="mt-6">
+            <a href="/portfolio" class="inline-flex items-center gap-1 rounded-full bg-brand-600 px-5 py-2 text-sm font-semibold text-white hover:bg-brand-700">
+              Lihat Semua Portofolio &gt;
             </a>
           </div>
+
+          <div class="mt-8 grid grid-cols-2 gap-4 flex-1">
+            {featuredPortfolio.slice(0, 2).map((item) => (
+              <div class="relative overflow-hidden rounded-2xl bg-ink-100">
+                <img src={item.image} alt={item.title} class="h-56 w-full object-cover" loading="lazy" />
+                <div class="absolute bottom-0 left-0 right-0 bg-black/60 px-4 py-3">
+                  <p class="text-sm text-white leading-snug">{item.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* kanan: 1 foto besar featured */}
+        {/* kanan: 1 foto besar dengan caption overlay */}
         {featuredPortfolio[2] && (
-          <div class="overflow-hidden rounded-2xl bg-ink-100">
-            <Image
+          <div class="relative overflow-hidden rounded-2xl bg-ink-100 min-h-[480px]">
+            <img
               src={featuredPortfolio[2].image}
               alt={featuredPortfolio[2].title}
-              class="h-full min-h-[320px] w-full object-cover"
-              width={800}
-              height={600}
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
             />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+              <p class="text-base font-medium text-white">{featuredPortfolio[2].title}</p>
+            </div>
           </div>
         )}
+
       </div>
     </div>
   </section>
 
   {/* ── TESTIMONI ── */}
-  <section id="testimoni" class="scroll-mt-20 bg-ink-50 py-20">
+  <section id="testimoni" class="scroll-mt-20 bg-white py-24">
     <div class="mx-auto max-w-[1400px] px-6">
-      <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Testimoni</p>
-      <h2 class="mt-3 text-3xl font-bold text-ink-900">Apa Kata Klien Kami</h2>
-
-      <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {SITE.testimonials.map((item) => (
-          <div class="flex flex-col rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
-            <p class="flex-1 text-sm leading-relaxed text-ink-700">&ldquo;{item.quote}&rdquo;</p>
-            <div class="mt-5 border-t border-ink-100 pt-4">
-              <p class="text-sm font-semibold text-ink-900">{item.name}</p>
-              <p class="text-xs text-ink-400">{item.company}</p>
-            </div>
-          </div>
-        ))}
+      <div class="mb-12 text-center">
+        <span class="inline-block rounded-full border border-ink-200 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink-500">
+          Testimoni Klien
+        </span>
+        <h2 class="mt-4 text-4xl font-bold text-ink-900">Apa Kata Klien Kami</h2>
+        <p class="mt-3 text-ink-500">Klien nyata berbagi pengalaman bekerja sama dengan tim kami.</p>
       </div>
+      <TestimonialCarousel client:visible testimonials={SITE.testimonials} />
     </div>
   </section>
 
@@ -300,14 +303,13 @@ const whyChooseUs = [
   {/* ── KONTAK INLINE ── */}
   <section id="kontak" class="scroll-mt-20 bg-white py-20">
     <div class="mx-auto max-w-[1400px] px-6">
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-stretch">
         {/* Form */}
-        <div class="rounded-2xl bg-ink-50 p-8">
-          <p class="text-sm font-semibold uppercase tracking-wide text-brand-600">Kontak</p>
-          <h2 class="mt-3 text-2xl font-bold text-ink-900">Kirim Pesan ke Kami</h2>
+        <div class="flex h-full flex-col rounded-2xl bg-ink-50 p-8">
+          <h2 class="text-2xl font-bold text-ink-900">Kirim Pesan ke Kami</h2>
           <p class="mt-2 text-sm text-ink-500">Isi form di bawah, tim kami akan merespons dalam 24 jam.</p>
           <div class="mt-6">
-            <ContactForm client:visible accessKey="" />
+            <ContactForm client:visible accessKey="GANTI_DENGAN_WEB3FORMS_ACCESS_KEY" />
           </div>
           <div class="mt-6 border-t border-ink-200 pt-6">
             <a
@@ -360,7 +362,7 @@ const whyChooseUs = [
         Punya proyek yang butuh penanganan surface finishing profesional?
       </h2>
       <p class="mt-4 max-w-lg text-brand-100">
-        Konsultasikan kebutuhan proyek Anda dengan tim kami — gratis survey dan penawaran.
+        Konsultasikan kebutuhan proyek Anda dengan tim kami, gratis survey dan penawaran.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-4">
         <a

@@ -1,45 +1,23 @@
-import { useState, type FormEvent } from "react";
+import { type FormEvent } from "react";
 
-type Status = "idle" | "sending" | "success" | "error";
+const TO = "sales@munggaranproteksi.com";
 
-export default function ContactForm({ accessKey }: { accessKey: string }) {
-  const [status, setStatus] = useState<Status>("idle");
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+export default function ContactForm({ accessKey: _ }: { accessKey: string }) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const fd = new FormData(event.currentTarget);
+    const name = fd.get("name") as string;
+    const phone = fd.get("phone") as string;
+    const email = fd.get("email") as string;
+    const message = fd.get("message") as string;
 
-    if (!accessKey) {
-      setStatus("error");
-      return;
-    }
-
-    setStatus("sending");
-    const formData = new FormData(event.currentTarget);
-    formData.append("access_key", accessKey);
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-      const result = await response.json();
-      if (result.success) {
-        setStatus("success");
-        event.currentTarget.reset();
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
+    const subject = `Pesan dari ${name} - Munggaran Proteksi`;
+    const body = `Nama: ${name}\nNo. WhatsApp: ${phone}\nEmail: ${email}\n\nKebutuhan Proyek:\n${message}`;
+    window.location.href = `mailto:${TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
-      <input type="hidden" name="subject" value="Pesan baru dari website Munggaran Proteksi" />
-
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-ink-700">
@@ -95,22 +73,10 @@ export default function ContactForm({ accessKey }: { accessKey: string }) {
 
       <button
         type="submit"
-        disabled={status === "sending"}
-        className="w-full rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700 disabled:opacity-60"
+        className="w-full rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
       >
-        {status === "sending" ? "Mengirim..." : "Kirim Pesan"}
+        Kirim Pesan
       </button>
-
-      {status === "success" && (
-        <p className="text-sm font-medium text-green-600">
-          Pesan berhasil dikirim. Tim kami akan segera menghubungi Anda.
-        </p>
-      )}
-      {status === "error" && (
-        <p className="text-sm font-medium text-red-600">
-          Gagal mengirim pesan. Silakan hubungi kami langsung via WhatsApp.
-        </p>
-      )}
     </form>
   );
 }

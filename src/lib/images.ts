@@ -24,12 +24,12 @@ export const CATEGORY_LABELS: Record<string, string> = {
 export const PORTFOLIO_ITEMS = [
   {
     category: "epoxy-flooring",
-    title: "Floor Coating — Syngenta Indonesia, Gunung Putri",
+    title: "Floor Coating,Syngenta Indonesia, Gunung Putri",
     image: "/gallery/portfolio-1.jpg",
   },
   {
     category: "epoxy-flooring",
-    title: "Epoxy Floor Coating — Area Produksi",
+    title: "Epoxy Floor Coating,Area Produksi",
     image: "/gallery/portfolio-2.jpg",
   },
   {
@@ -39,27 +39,27 @@ export const PORTFOLIO_ITEMS = [
   },
   {
     category: "sandblasting-painting",
-    title: "Sandblasting & Painting — PT. Riung Mitra Lestari, Kalimantan Selatan",
+    title: "Sandblasting & Painting,PT. Riung Mitra Lestari, Kalimantan Selatan",
     image: "/gallery/portfolio-8.jpg",
   },
   {
     category: "polished-concrete",
-    title: "Polished Concrete — Area Retail",
+    title: "Polished Concrete,Area Retail",
     image: "/gallery/portfolio-9.jpg",
   },
   {
     category: "polished-concrete",
-    title: "Polished Concrete — Lobby",
+    title: "Polished Concrete,Lobby",
     image: "/gallery/portfolio-10.jpg",
   },
   {
     category: "pipe-wrapping",
-    title: "Pipe Wrapping 3LPE — BYD Site, Subang",
+    title: "Pipe Wrapping 3LPE,BYD Site, Subang",
     image: "/gallery/portfolio-14.jpg",
   },
   {
     category: "pipe-wrapping",
-    title: "Pipe Wrapping 3LPE — Pertamina Gas, Jawa Timur",
+    title: "Pipe Wrapping 3LPE,Pertamina Gas, Jawa Timur",
     image: "/gallery/portfolio-17.jpg",
   },
 ];

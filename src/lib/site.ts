@@ -6,9 +6,9 @@ export const SITE = {
   philosophy: "Kami Tidak Sekedar Mengerjakan, Kami Menyempurnakan",
   description:
     "Munggaran Proteksi menyediakan jasa epoxy flooring, sandblasting & painting, polished concrete, dan pipe wrapping (3 LPE) untuk kebutuhan industri, konstruksi, dan infrastruktur di Indonesia.",
-  phone: "+62811880099972",
-  phoneDisplay: "+62 811 880 99972",
-  whatsappUrl: "https://wa.me/62811880099972",
+  phone: "+628118809972",
+  phoneDisplay: "+62 811 8809 9972",
+  whatsappUrl: "https://wa.me/628118809972",
   email: "sales@munggaranproteksi.com",
   officeAddress: "Jl. Benda, Ruko Ngunut No.131 J RT.001/RW.03 Kel. Jatiluhur, Kec. Jatiasih, Bekasi 17425",
   workshopAddress: "Jl. Mawar No.101 RT.003/RW.002 Pedurenan, Mustika Jaya, Bantargebang",
@@ -88,7 +88,7 @@ export const FAQS = [
   {
     question: "Berapa lama proses pengerjaan satu proyek?",
     answer:
-      "Durasi tergantung skala dan jenis layanan — mulai dari beberapa hari untuk area kecil hingga beberapa minggu untuk proyek industri besar. Estimasi waktu diberikan setelah survey lokasi.",
+      "Durasi tergantung skala dan jenis layanan, mulai dari beberapa hari untuk area kecil hingga beberapa minggu untuk proyek industri besar. Estimasi waktu diberikan setelah survey lokasi.",
   },
   {
     question: "Apakah ada survey lokasi sebelum penawaran?",
