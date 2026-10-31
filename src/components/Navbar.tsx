@@ -86,7 +86,7 @@ export default function Navbar({
           <img src={logoSrc} alt="Munggaran Proteksi" className="h-10 w-auto" />
         </a>
 
-        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 md:flex">
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-5 whitespace-nowrap xl:gap-6 lg:flex">
           {links.map((link) => (
             <a
               key={link.href}
@@ -103,9 +103,10 @@ export default function Navbar({
 
         <a
           href="/#kontak"
-          className="hidden rounded-full bg-brand-500 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600 md:inline-block"
+          className="hidden rounded-full bg-brand-500 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600 lg:inline-flex lg:items-center lg:gap-2"
         >
           Kirim Penawaran
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.27 3.13a.75.75 0 011.03-.88l16.5 8.25a.75.75 0 010 1.34L4.3 19.99a.75.75 0 01-1.03-.88L6 12zm0 0h7.5" /></svg>
         </a>
 
         <button
@@ -113,14 +114,14 @@ export default function Navbar({
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-md text-white md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-md text-white lg:hidden"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-white/10 bg-navy-900 px-6 py-4 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-white/10 bg-navy-900 px-6 py-4 lg:hidden">
           {links.map((link) => (
             <a
               key={link.href}
@@ -135,9 +136,10 @@ export default function Navbar({
           ))}
           <a
             href="/#kontak"
-            className="mt-2 rounded-full bg-brand-500 px-5 py-2 text-center text-sm font-semibold text-white"
+            className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-2 text-center text-sm font-semibold text-white"
           >
             Kirim Penawaran
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.27 3.13a.75.75 0 011.03-.88l16.5 8.25a.75.75 0 010 1.34L4.3 19.99a.75.75 0 01-1.03-.88L6 12zm0 0h7.5" /></svg>
           </a>
         </nav>
       )}

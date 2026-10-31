@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Testimonial = { quote: string; name: string; company: string };
 
@@ -32,6 +32,14 @@ function StarRow() {
 
 export default function TestimonialCarousel({ testimonials }: { testimonials: Testimonial[] }) {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused || testimonials.length < 2) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setTimeout(() => setActive((a) => (a + 1) % testimonials.length), 5000);
+    return () => clearTimeout(id);
+  }, [active, paused, testimonials.length]);
 
   const prev = () => setActive((a) => (a - 1 + testimonials.length) % testimonials.length);
   const next = () => setActive((a) => (a + 1) % testimonials.length);
@@ -41,7 +49,13 @@ export default function TestimonialCarousel({ testimonials }: { testimonials: Te
   const rightIdx = (active + 1) % testimonials.length;
 
   return (
-    <div className="flex flex-col items-center">
+    <div
+      className="flex flex-col items-center"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       {/* Avatar row */}
       <div className="flex items-center gap-3 mb-12">
         {indices.map((i) => (
@@ -55,7 +69,7 @@ export default function TestimonialCarousel({ testimonials }: { testimonials: Te
       <div className="relative flex w-full items-center justify-center gap-5">
         {/* Left card */}
         <div
-          className="hidden md:block w-[300px] flex-shrink-0 cursor-pointer rounded-2xl border border-ink-200 bg-white p-6 opacity-50 shadow-sm transition-all hover:opacity-70"
+          className="hidden lg:block w-[240px] xl:w-[300px] flex-shrink-0 cursor-pointer rounded-2xl border border-ink-200 bg-white p-6 opacity-50 shadow-sm transition-all hover:opacity-70"
           onClick={prev}
         >
           <div className="flex items-center gap-3 mb-4">
@@ -72,7 +86,7 @@ export default function TestimonialCarousel({ testimonials }: { testimonials: Te
         </div>
 
         {/* Center card (active) */}
-        <div className="w-full max-w-xl flex-shrink-0 rounded-2xl border-2 border-brand-600 bg-white p-8 shadow-lg">
+        <div className="w-full min-w-0 max-w-xl rounded-2xl border-2 border-brand-600 bg-white p-8 shadow-lg">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-full text-base font-semibold text-white" style={{ backgroundColor: COLORS[active % COLORS.length] }}>
               {testimonials[active].name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}
@@ -88,7 +102,7 @@ export default function TestimonialCarousel({ testimonials }: { testimonials: Te
 
         {/* Right card */}
         <div
-          className="hidden md:block w-[300px] flex-shrink-0 cursor-pointer rounded-2xl border border-ink-200 bg-white p-6 opacity-50 shadow-sm transition-all hover:opacity-70"
+          className="hidden lg:block w-[240px] xl:w-[300px] flex-shrink-0 cursor-pointer rounded-2xl border border-ink-200 bg-white p-6 opacity-50 shadow-sm transition-all hover:opacity-70"
           onClick={next}
         >
           <div className="flex items-center gap-3 mb-4">
