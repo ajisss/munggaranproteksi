@@ -80,8 +80,8 @@ export const NAV_LINKS = [
   { label: "Kenapa Pilih Kami", href: "/#kenapa-kami", sectionId: "kenapa-kami" },
   { label: "Portfolio", href: "/#portfolio-preview", sectionId: "portfolio-preview" },
   { label: "Testimoni", href: "/#testimoni", sectionId: "testimoni" },
-  { label: "FAQ", href: "/#faq", sectionId: "faq" },
   { label: "Tentang Kami", href: "/#tentang-kami", sectionId: "tentang-kami" },
+  { label: "FAQ", href: "/#faq", sectionId: "faq" },
 ];
 
 export const FAQS = [

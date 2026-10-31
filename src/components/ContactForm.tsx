@@ -73,9 +73,10 @@ export default function ContactForm({ accessKey: _ }: { accessKey: string }) {
 
       <button
         type="submit"
-        className="w-full rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
       >
         Kirim Pesan
+        <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.27 3.13a.75.75 0 011.03-.88l16.5 8.25a.75.75 0 010 1.34L4.3 19.99a.75.75 0 01-1.03-.88L6 12zm0 0h7.5" /></svg>
       </button>
     </form>
   );
